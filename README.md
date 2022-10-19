@@ -1,7 +1,34 @@
-## Spring Systems Developer Challenge
+# Spring Systems Developer Challenge
 
+### Viewing the output of this project
 To view the output - https://drive.google.com/file/d/1ixxpj71ZAhrIqEQogCxhpM-prgOZ4W8k/view?usp=sharing
 
+### Setting up the project
+
+1. Clone the repo
+2. Execute the following commands:
+```sh
+$ cd frontend
+$ npm i
+$ cd ../backend
+$ npm i
+$ npx prisma migrate dev
+$ npx prisma migrate deploy
+```
+3. To start the project:
+```sh
+# In a new terminal window
+$ cd frontend
+$ npm start
+```
+```sh
+# In a new terminal window
+$ cd backend
+$ npm start
+```
+4. Visit `http://localhost:3000`
+
+### SQL for the database
 ```sql
 CREATE DATABASE companydb
     WITH
