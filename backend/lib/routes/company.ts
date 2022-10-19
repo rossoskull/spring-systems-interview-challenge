@@ -2,6 +2,7 @@ import express from 'express'
 import client from '../prisma'
 import z from 'zod'
 
+// schemas for request bodies
 const companySchema = z.object({
   name: z.string(),
   address: z.string(),
@@ -38,7 +39,22 @@ router.post('/', async (request, response, next) => {
 // get list of companies
 router.get('/', async (_, response, next) => {
   try {
-    const companies = await client.company.findMany()
+    const companies = await client.company.findMany({
+      include: {
+        employees: true
+      }
+    }).then((companies) => {
+      return companies.map((company) => {
+        const employees_count = company.employees.length
+        return {
+          id: company.id,
+          name: company.name,
+          address: company.address,
+          pin_code: company.pin_code,
+          employees_count
+        }
+      })
+    })
 
     response.status(200).send({
       companies,
@@ -64,6 +80,9 @@ router.get('/:id', async (request, response, next) => {
     const company = await client.company.findUniqueOrThrow({
       where: {
         id
+      },
+      include: {
+        employees: true
       }
     })
 
