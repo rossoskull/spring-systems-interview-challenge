@@ -14,6 +14,9 @@ const port = 8000
 app.use(cors())
 app.use(bodyParser.json())
 
+// add a latency of 300 ms
+app.use((_, __, next) => setTimeout(next, 300))
+
 // listen for routes
 app.use('/company', companyRouter)
 app.use('/employee', employeeRouter)
